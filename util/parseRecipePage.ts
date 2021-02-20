@@ -22,6 +22,9 @@ type Recipe = {
 const parseRecipePage = (htmlText: string): Recipe => {
   const $ = cheerio.load(htmlText);
 
+  const imageUrl = $(".image-container")
+    .children('[data-src*=".jpg"]')
+    .attr("data-src");
   const title = $("h1").text();
   const ingredients = $(".ingredients-item-name")
     .map((i, item) => $(item).text().trim())
@@ -34,6 +37,7 @@ const parseRecipePage = (htmlText: string): Recipe => {
     title,
     ingredients,
     method,
+    imageUrl,
   };
 };
 
